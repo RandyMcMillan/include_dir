@@ -14,7 +14,7 @@ fn main() {
     for entry in PROJECT_DIR.find(&glob).unwrap() {
         println!("Found {}", entry.path().display());
         let lib_rs = PROJECT_DIR.get_file(format!("{}",entry.path().display()));
-        print!("{:?}",Some(lib_rs).unwrap());
+        print!("{:?}\n",Some(lib_rs).unwrap());
         //let body = Some(lib_rs.expect("REASON").contents_utf8());
         //let body = lib_rs.contents_utf8().unwrap();
         //let body = lib_rs.expect("REASON").contents_utf8().unwrap();
