@@ -21,46 +21,30 @@ cargo-b:cargo-build### 	cargo b
 cargo-build:### 	cargo build
 ## 	cargo-build q=true
 	@. $(HOME)/.cargo/env
-	@RUST_BACKTRACE=all cargo b $(QUIET)
+	@RUST_BACKTRACE=all cargo b $(QUIET) --features glob --features metadata
 cargo-i:cargo-install
 cargo-install:### 	cargo install --path jj
-	#@. $(HOME)/.cargo/env
-	@cargo install --path jj
+	@. $(HOME)/.cargo/env
+	@cargo install --bin include_dir_example --path include_dir --features metadata --features glob
 cargo-br:cargo-build-release### 	cargo-br
 ## 	cargo-br q=true
+	cargo b -r --features glob --features metadata
 cargo-build-release:### 	cargo-build-release
 ## 	cargo-build-release q=true
-	@. $(HOME)/.cargo/env && cargo b --release $(QUIET)
+	@. $(HOME)/.cargo/env && cargo b --release $(QUIET) --features glob --features metadata
+cargo-c:cargo-check
 cargo-check:### 	cargo-check
-	@. $(HOME)/.cargo/env && cargo c
+	@. $(HOME)/.cargo/env && cargo c --features glob --features metadata
 cargo-bench:### 	cargo-bench
-	@. $(HOME)/.cargo/env && cargo bench
+	@. $(HOME)/.cargo/env && cargo bench --features glob --features metadata
 cargo-t:cargo-test
 cargo-test:### 	cargo-test
-	@. $(HOME)/.cargo/env && cargo test --verbose
+	@. $(HOME)/.cargo/env && cargo test --verbose --features glob --features metadata
 cargo-t-wp:cargo-test-workspace
 cargo-test-workspace:### 	cargo-test-workspace
-	@. $(HOME)/.cargo/env && cargo test --workspace --verbose
+	@. $(HOME)/.cargo/env && cargo test --workspace --verbose --features glob --features metadata
 cargo-report:### 	cargo-report
 	@. $(HOME)/.cargo/env && cargo report future-incompatibilities --id 1
-
-cargo-deps-gnostr-all:cargo-deps-gnostr-cat cargo-deps-gnostr-cli cargo-deps-gnostr-command cargo-deps-gnostr-grep cargo-deps-gnostr-legit cargo-deps-gnostr-sha256### 	cargo-deps-gnostr-all
-cargo-deps-gnostr-cat:### 	cargo-deps-gnostr-cat
-	rustup-init -y -q --default-toolchain $(TOOLCHAIN) && \
-    source "$(HOME)/.cargo/env" && \
-    cd deps/gnostr-cat && $(MAKE) cargo-build-release cargo-install
-    ## cargo $(Z) deps/gnostr-cat install --path .
-cargo-deps-gnostr-cli:### 	cargo-deps-gnostr-cli
-	cargo -Z unstable-options  -C deps/gnostr-cli install --path .
-cargo-deps-gnostr-command:### 	cargo-deps-gnostr-command
-	cargo -Z unstable-options  -C deps/gnostr-command install --path .
-cargo-deps-gnostr-grep:### 	cargo-deps-gnostr-grep
-	cargo -Z unstable-options  -C deps/gnostr-grep install --path .
-cargo-deps-gnostr-legit:### 	cargo-deps-gnostr-legit
-	cargo -Z unstable-options  -C deps/gnostr-legit install --path .
-cargo-deps-gnostr-sha256:### 	cargo-deps-gnostr-sha256
-	cargo -Z unstable-options  -C deps/gnostr-sha256 install --path .
-##===============================================================================
 
 # vim: set noexpandtab:
 # vim: set setfiletype make
