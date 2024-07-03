@@ -24,8 +24,6 @@
 <a href="#24" id="24">24</a>
 <a href="#25" id="25">25</a>
 <a href="#26" id="26">26</a>
-<a href="#27" id="27">27</a>
-<a href="#28" id="28">28</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>include_dir::{include_dir, Dir};
 
 <span class="kw">static </span>PROJECT_DIR: Dir = <span class="macro">include_dir!</span>(<span class="string">"$CARGO_MANIFEST_DIR"</span>);
@@ -42,13 +40,11 @@
         <span class="kw">let </span>file = PROJECT_DIR.get_file(<span class="macro">format!</span>(<span class="string">"{}"</span>, entry.path().display()));
         <span class="kw">if </span>file.is_none() {
         } <span class="kw">else </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>file_contents = file.expect(<span class="string">"REASON"</span>).contents_utf8();
-            <span class="kw">let </span><span class="kw-2">mut </span>file_path = file.expect(<span class="string">"REASON"</span>).path();
+            <span class="kw">let </span>file_contents = file.expect(<span class="string">"REASON"</span>).contents_utf8();
+            <span class="kw">let </span>file_path = file.expect(<span class="string">"REASON"</span>).path();
             <span class="kw">if </span>file_contents.is_none() {
-                <span class="comment">//print!("file_contents.is_none()={}\n", file_contents.is_none());
-            </span>} <span class="kw">else </span>{
-                <span class="comment">//print!("file_contents.is_none()={}\n", file_contents.is_none());
-                </span><span class="macro">print!</span>(<span class="string">"{:}\n"</span>,file_path.display());
+            } <span class="kw">else </span>{
+                <span class="macro">print!</span>(<span class="string">"{:}\n"</span>,file_path.display());
                 <span class="macro">print!</span>(<span class="string">"{:}"</span>,file_contents.clone().unwrap());
             }
         }
