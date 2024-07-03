@@ -24,19 +24,26 @@ use include_dir::{include_dir, Dir};
 
 static PROJECT_DIR: Dir = include_dir!("$CARGO_MANIFEST_DIR");
 
-// of course, you can retrieve a file by its full path
-let lib_rs = PROJECT_DIR.get_file("src/lib.rs").unwrap();
+fn main() {
+    let lib_rs = PROJECT_DIR.get_file("src/lib.rs").unwrap();
+    let body = lib_rs.contents_utf8().unwrap();
+    assert!(body.contains("globs"));
+    #[allow(unused_variables)]
+    let glob: &str = "**";
+    #[cfg(feature = "glob")]
+    for entry in PROJECT_DIR.find(&glob).unwrap() {
 
-// you can also inspect the file's contents
-let body = lib_rs.contents_utf8().unwrap();
-assert!(body.contains("SOME_INTERESTING_STRING"));
-
-// you can search for files (and directories) using glob patterns
-#[cfg(feature = "glob")]
-{
-    let glob = "**/*.rs";
-    for entry in PROJECT_DIR.find(glob).unwrap() {
-        println!("Found {}", entry.path().display());
+        let file = PROJECT_DIR.get_file(format!("{}", entry.path().display()));
+        if file.is_none() {
+        } else {
+            let file_contents = file.expect("REASON").contents_utf8();
+            let file_path = file.expect("REASON").path();
+            if file_contents.is_none() {
+            } else {
+                print!("{:}\n",file_path.display());
+                print!("{:}",file_contents.clone().unwrap());
+            }
+        }
     }
 }
 ```
