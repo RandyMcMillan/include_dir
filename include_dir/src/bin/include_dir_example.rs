@@ -7,6 +7,7 @@ fn main() {
     let body = lib_rs.contents_utf8().unwrap();
     assert!(body.contains("globs"));
     //#[cfg(feature = "metadata")]
+    #[allow(unused_variables)]
     let glob: &str = "**/*.rs";
     #[cfg(feature = "glob")]
     for entry in PROJECT_DIR.find(&glob).unwrap() {
