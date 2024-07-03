@@ -1,3 +1,17 @@
 [workspace]
 members = ["include_dir", "macros"]
 resolver = "2"
+
+[workspace.package]
+version = "0.7.4"
+license = "LICENSE"
+rust-version = "1.64"
+edition = "2018"
+readme = "README.md"
+homepage = "https://github.com/Michael-F-Bryan/include_dir"
+repository = "https://github.com/Michael-F-Bryan/include_dir"
+documentation = "https://www.michaelfbryan.com/include_dir/include_dir"
+categories = ["caching", "filesystem"]
+keywords = ["include_str", "include_bytes", "include", "CARGO_MANIFEST_DIR"]
+description = "An extension to the include_str!() and include_bytes!() macro for embedding an entire directory tree into your binary."
+authors = ["Michael Bryan <michaelfbryan@gmail.com>"]
