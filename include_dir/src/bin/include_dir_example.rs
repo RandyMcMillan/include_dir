@@ -8,7 +8,8 @@ fn main() {
     assert!(body.contains("globs"));
     //#[cfg(feature = "metadata")]
     #[allow(unused_variables)]
-    let glob: &str = "**/*.rs";
+    //let glob: &str = "**/*.rs";
+    let glob: &str = "**";
     #[cfg(feature = "glob")]
     for entry in PROJECT_DIR.find(&glob).unwrap() {
         println!("Found {}", entry.path().display());
