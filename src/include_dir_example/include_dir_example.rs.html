@@ -26,17 +26,6 @@
 <a href="#26" id="26">26</a>
 <a href="#27" id="27">27</a>
 <a href="#28" id="28">28</a>
-<a href="#29" id="29">29</a>
-<a href="#30" id="30">30</a>
-<a href="#31" id="31">31</a>
-<a href="#32" id="32">32</a>
-<a href="#33" id="33">33</a>
-<a href="#34" id="34">34</a>
-<a href="#35" id="35">35</a>
-<a href="#36" id="36">36</a>
-<a href="#37" id="37">37</a>
-<a href="#38" id="38">38</a>
-<a href="#39" id="39">39</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>include_dir::{include_dir, Dir};
 
 <span class="kw">static </span>PROJECT_DIR: Dir = <span class="macro">include_dir!</span>(<span class="string">"$CARGO_MANIFEST_DIR"</span>);
@@ -45,26 +34,15 @@
     <span class="kw">let </span>lib_rs = PROJECT_DIR.get_file(<span class="string">"src/lib.rs"</span>).unwrap();
     <span class="kw">let </span>body = lib_rs.contents_utf8().unwrap();
     <span class="macro">assert!</span>(body.contains(<span class="string">"globs"</span>));
-    <span class="comment">//#[cfg(feature = "metadata")]
-    </span><span class="attr">#[allow(unused_variables)]
-    </span><span class="comment">//let glob: &amp;str = "**/*.rs";
+    <span class="attr">#[allow(unused_variables)]
     </span><span class="kw">let </span>glob: <span class="kw-2">&amp;</span>str = <span class="string">"**"</span>;
     <span class="attr">#[cfg(feature = <span class="string">"glob"</span>)]
     </span><span class="kw">for </span>entry <span class="kw">in </span>PROJECT_DIR.find(<span class="kw-2">&amp;</span>glob).unwrap() {
-        <span class="comment">//println!("Found {}", entry.path().display());
-        //print!(
-        //    "{:?}\n",
-        //    PROJECT_DIR.get_file(format!("{}", entry.path().display()))
-        //);
-        </span><span class="kw">let </span>file = PROJECT_DIR.get_file(<span class="macro">format!</span>(<span class="string">"{}"</span>, entry.path().display()));
-        <span class="comment">//print!("{:?}\n", Some(file).unwrap());
-        //let body = Some(lib_rs.expect("REASON").contents_utf8());
 
-        </span><span class="kw">if </span>file.is_none() {
-            <span class="comment">//print!("file.is_none()={}\n", file.is_none());
-        </span>} <span class="kw">else </span>{
-            <span class="comment">//let file_contents = Some(file.expect("REASON").contents_utf8().unwrap());
-            </span><span class="kw">let </span><span class="kw-2">mut </span>file_contents = file.expect(<span class="string">"REASON"</span>).contents_utf8();
+        <span class="kw">let </span>file = PROJECT_DIR.get_file(<span class="macro">format!</span>(<span class="string">"{}"</span>, entry.path().display()));
+        <span class="kw">if </span>file.is_none() {
+        } <span class="kw">else </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>file_contents = file.expect(<span class="string">"REASON"</span>).contents_utf8();
             <span class="kw">let </span><span class="kw-2">mut </span>file_path = file.expect(<span class="string">"REASON"</span>).path();
             <span class="kw">if </span>file_contents.is_none() {
                 <span class="comment">//print!("file_contents.is_none()={}\n", file_contents.is_none());
