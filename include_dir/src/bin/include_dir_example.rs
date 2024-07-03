@@ -8,8 +8,8 @@ fn main() {
     assert!(body.contains("globs"));
     //#[cfg(feature = "metadata")]
     #[allow(unused_variables)]
-    let glob: &str = "**/*.rs";
-    //let glob: &str = "**";
+    //let glob: &str = "**/*.rs";
+    let glob: &str = "**";
     #[cfg(feature = "glob")]
     for entry in PROJECT_DIR.find(&glob).unwrap() {
         //println!("Found {}", entry.path().display());
@@ -26,11 +26,13 @@ fn main() {
         } else {
             //let file_contents = Some(file.expect("REASON").contents_utf8().unwrap());
             let mut file_contents = file.expect("REASON").contents_utf8();
+            let mut file_path = file.expect("REASON").path();
             if file_contents.is_none() {
                 //print!("file_contents.is_none()={}\n", file_contents.is_none());
             } else {
                 //print!("file_contents.is_none()={}\n", file_contents.is_none());
-                print!("{:}",file_contents.clone().unwrap());
+                print!("{:}\n",file_path.display());
+                print!("{:}\n",file_contents.clone().unwrap());
             }
         }
     }
