@@ -32,7 +32,7 @@ fn main() {
             } else {
                 //print!("file_contents.is_none()={}\n", file_contents.is_none());
                 print!("{:}\n",file_path.display());
-                print!("{:}\n",file_contents.clone().unwrap());
+                print!("{:}",file_contents.clone().unwrap());
             }
         }
     }
