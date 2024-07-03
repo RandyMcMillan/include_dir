@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["glob","include_dir","include_dir_macros","proc_macro2","quote","unicode_ident"];
+window.ALL_CRATES = ["glob","include_dir","include_dir_example","include_dir_macros","proc_macro2","quote","unicode_ident"];
