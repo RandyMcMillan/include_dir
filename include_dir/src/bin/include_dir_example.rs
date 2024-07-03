@@ -30,11 +30,12 @@ fn main() {
                 print!("file_contents.is_none()={}\n", file_contents.is_none());
             } else {
                 print!("file_contents.is_none()={}\n", file_contents.is_none());
-		file_contents = Some(Some(lib_rs.contents_utf8().unwrap()));
+		//file_contents = Some(Some(file.expect("REASON").contents_utf8().unwrap()));
+                print!("{:?}",file_contents.clone());
             }
         }
         //let body = lib_rs.expect("REASON").contents_utf8().unwrap();
-        //print!("{:?}",Some(body).unwrap());
+        //print!("{:?}",file_contents.clone());
         //let entry_body: &str = PROJECT_DIR.get_file(entry.path().display().unwrap());
         //let body = entry.contents_utf8().unwrap();
     }
