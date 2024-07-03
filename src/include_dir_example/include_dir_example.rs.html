@@ -25,7 +25,14 @@
 <a href="#25" id="25">25</a>
 <a href="#26" id="26">26</a>
 <a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>include_dir::{include_dir, Dir};
+<span class="kw">use </span>sha2::{Digest, Sha256};
 
 <span class="kw">static </span>PROJECT_DIR: Dir = <span class="macro">include_dir!</span>(<span class="string">"$CARGO_MANIFEST_DIR"</span>);
 
@@ -46,8 +53,13 @@
             <span class="kw">let </span>file_path = file.expect(<span class="string">"REASON"</span>).path();
             <span class="kw">if </span>file_contents.is_none() {
             } <span class="kw">else </span>{
+                <span class="kw">let </span><span class="kw-2">mut </span>hasher = Sha256::new();
+                hasher.update(file_contents.clone().unwrap());
+                <span class="kw">let </span>hash = hasher.finalize();
+                <span class="kw">let </span>hash_string = <span class="macro">format!</span>(<span class="string">"{:x}"</span>, hash);
                 <span class="macro">print!</span>(<span class="string">"{:}\n"</span>, file_path.display());
                 <span class="macro">print!</span>(<span class="string">"{:}"</span>, file_contents.clone().unwrap());
+                <span class="macro">print!</span>(<span class="string">"{:}\n"</span>, hash_string);
             }
         }
     }
