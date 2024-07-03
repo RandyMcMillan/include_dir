@@ -26,6 +26,7 @@ cargo-i:cargo-install
 cargo-install:### 	cargo install --path jj
 	@. $(HOME)/.cargo/env
 	@cargo install --bin include_dir_example --path include_dir --features metadata --features glob
+	@cargo install --bin include_dir-example --path include_dir --features metadata --features glob
 cargo-br:cargo-build-release### 	cargo-br
 ## 	cargo-br q=true
 	cargo b -r --features glob --features metadata

@@ -11,9 +11,13 @@ repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
 
+[[bin]]
+name = "include_dir-example"
+doc = false
+
 [dependencies]
 glob = { version = "0.3", optional = true }
-include_dir_macros = { version = "^0.0.1", path = "../macros" }
+include_dir_macros = { path = "../macros" }
 
 [dev-dependencies]
 tempfile = "3"
