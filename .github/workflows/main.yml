@@ -44,12 +44,12 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --workspace --verbose
+          args: --workspace --verbose --features metadata --features glob
       - name: Build
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --workspace --verbose
+          args: --workspace --verbose --features metadata --features glob
       - name: Test
         uses: actions-rs/cargo@v1
         with:
