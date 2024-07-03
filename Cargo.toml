@@ -3,7 +3,7 @@ members = ["include_dir", "macros"]
 resolver = "2"
 
 [workspace.package]
-version = "0.7.4"
+version = "0.0.1"
 license = "MIT"
 rust-version = "1.64"
 edition = "2018"
