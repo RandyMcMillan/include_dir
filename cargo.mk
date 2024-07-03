@@ -39,6 +39,8 @@ cargo-bench:### 	cargo-bench
 	@. $(HOME)/.cargo/env && cargo bench --features glob --features metadata
 cargo-t:cargo-test
 cargo-test:### 	cargo-test
+	@. $(HOME)/.cargo/env && cargo test --verbose
+	@. $(HOME)/.cargo/env && cargo test --verbose --features glob
 	@. $(HOME)/.cargo/env && cargo test --verbose --features glob --features metadata
 cargo-t-wp:cargo-test-workspace
 cargo-test-workspace:### 	cargo-test-workspace
