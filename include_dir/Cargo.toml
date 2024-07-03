@@ -17,7 +17,9 @@ doc = false
 
 [dependencies]
 glob = { version = "0.3", optional = true }
+hex-literal = "0.4.1"
 include_dir_macros = { path = "../macros" }
+sha2 = "0.10.8"
 
 [dev-dependencies]
 tempfile = "3"
