@@ -9,7 +9,7 @@ fn main() {
     #[cfg(feature = "glob")]
     #[cfg(feature = "metadata")]
     let glob: &str = "**/*.rs";
-    for entry in PROJECT_DIR.find(&glob.clone()).unwrap() {
+    for entry in PROJECT_DIR.find(&glob).unwrap() {
         println!("Found {}", entry.path().display());
     }
 }
