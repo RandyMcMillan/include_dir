@@ -8,35 +8,30 @@ fn main() {
     assert!(body.contains("globs"));
     //#[cfg(feature = "metadata")]
     #[allow(unused_variables)]
-    //let glob: &str = "**/*.rs";
-    let glob: &str = "**";
+    let glob: &str = "**/*.rs";
+    //let glob: &str = "**";
     #[cfg(feature = "glob")]
     for entry in PROJECT_DIR.find(&glob).unwrap() {
-        println!("Found {}", entry.path().display());
-        print!(
-            "16:{:?}\n",
-            PROJECT_DIR.get_file(format!("{}", entry.path().display()))
-        );
+        //println!("Found {}", entry.path().display());
+        //print!(
+        //    "{:?}\n",
+        //    PROJECT_DIR.get_file(format!("{}", entry.path().display()))
+        //);
         let file = PROJECT_DIR.get_file(format!("{}", entry.path().display()));
-        print!("{:?}\n", Some(file).unwrap());
+        //print!("{:?}\n", Some(file).unwrap());
         //let body = Some(lib_rs.expect("REASON").contents_utf8());
 
         if file.is_none() {
-            print!("file.is_none()={}\n", file.is_none());
+            //print!("file.is_none()={}\n", file.is_none());
         } else {
             //let file_contents = Some(file.expect("REASON").contents_utf8().unwrap());
-            let mut file_contents = Some(file.expect("REASON").contents_utf8());
+            let mut file_contents = file.expect("REASON").contents_utf8();
             if file_contents.is_none() {
-                print!("file_contents.is_none()={}\n", file_contents.is_none());
+                //print!("file_contents.is_none()={}\n", file_contents.is_none());
             } else {
-                print!("file_contents.is_none()={}\n", file_contents.is_none());
-		//file_contents = Some(Some(file.expect("REASON").contents_utf8().unwrap()));
-                print!("{:?}",file_contents.clone());
+                //print!("file_contents.is_none()={}\n", file_contents.is_none());
+                print!("{:}",file_contents.clone().unwrap());
             }
         }
-        //let body = lib_rs.expect("REASON").contents_utf8().unwrap();
-        //print!("{:?}",file_contents.clone());
-        //let entry_body: &str = PROJECT_DIR.get_file(entry.path().display().unwrap());
-        //let body = entry.contents_utf8().unwrap();
     }
 }
