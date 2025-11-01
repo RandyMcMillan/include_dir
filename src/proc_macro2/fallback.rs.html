@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/proc-macro2-1.0.101/src/fallback.rs`."><title>fallback.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="proc_macro2" data-themes="" data-resource-suffix="" data-rustdoc-version="1.92.0-nightly (dc2c3564d 2025-09-29)" data-channel="nightly" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-828709d0.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ce535bd0.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">proc_macro2/</div>fallback.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-4"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#[cfg(wrap_proc_macro)]
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/proc-macro2-1.0.103/src/fallback.rs`."><title>fallback.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-ca0dd0c4.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="proc_macro2" data-themes="" data-resource-suffix="" data-rustdoc-version="1.93.0-nightly (d5419f1e9 2025-10-30)" data-channel="nightly" data-search-js="search-6acd48a0.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ce535bd0.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">proc_macro2/</div>fallback.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-4"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="attr">#[cfg(wrap_proc_macro)]
 <a href=#2 id=2 data-nosnippet>2</a></span><span class="kw">use </span><span class="kw">crate</span>::imp;
 <a href=#3 id=3 data-nosnippet>3</a><span class="attr">#[cfg(span_locations)]
 <a href=#4 id=4 data-nosnippet>4</a></span><span class="kw">use </span><span class="kw">crate</span>::location::LineColumn;
@@ -217,18 +217,18 @@
 <a href=#217 id=217 data-nosnippet>217</a>    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
 <a href=#218 id=218 data-nosnippet>218</a>        <span class="kw">let </span><span class="kw-2">mut </span>joint = <span class="bool-val">false</span>;
 <a href=#219 id=219 data-nosnippet>219</a>        <span class="kw">for </span>(i, tt) <span class="kw">in </span><span class="self">self</span>.inner.iter().enumerate() {
-<a href=#220 id=220 data-nosnippet>220</a>            <span class="kw">if </span>i != <span class="number">0 </span>&amp;&amp; !joint {
+<a href=#220 id=220 data-nosnippet>220</a>            <span class="kw">if </span><span class="macro">i !</span>= <span class="number">0 </span>&amp;&amp; !joint {
 <a href=#221 id=221 data-nosnippet>221</a>                <span class="macro">write!</span>(f, <span class="string">" "</span>)<span class="question-mark">?</span>;
 <a href=#222 id=222 data-nosnippet>222</a>            }
 <a href=#223 id=223 data-nosnippet>223</a>            joint = <span class="bool-val">false</span>;
 <a href=#224 id=224 data-nosnippet>224</a>            <span class="kw">match </span>tt {
-<a href=#225 id=225 data-nosnippet>225</a>                TokenTree::Group(tt) =&gt; Display::fmt(tt, f),
-<a href=#226 id=226 data-nosnippet>226</a>                TokenTree::Ident(tt) =&gt; Display::fmt(tt, f),
+<a href=#225 id=225 data-nosnippet>225</a>                TokenTree::Group(tt) =&gt; <span class="macro">write!</span>(f, <span class="string">"{}"</span>, tt),
+<a href=#226 id=226 data-nosnippet>226</a>                TokenTree::Ident(tt) =&gt; <span class="macro">write!</span>(f, <span class="string">"{}"</span>, tt),
 <a href=#227 id=227 data-nosnippet>227</a>                TokenTree::Punct(tt) =&gt; {
 <a href=#228 id=228 data-nosnippet>228</a>                    joint = tt.spacing() == Spacing::Joint;
-<a href=#229 id=229 data-nosnippet>229</a>                    Display::fmt(tt, f)
+<a href=#229 id=229 data-nosnippet>229</a>                    <span class="macro">write!</span>(f, <span class="string">"{}"</span>, tt)
 <a href=#230 id=230 data-nosnippet>230</a>                }
-<a href=#231 id=231 data-nosnippet>231</a>                TokenTree::Literal(tt) =&gt; Display::fmt(tt, f),
+<a href=#231 id=231 data-nosnippet>231</a>                TokenTree::Literal(tt) =&gt; <span class="macro">write!</span>(f, <span class="string">"{}"</span>, tt),
 <a href=#232 id=232 data-nosnippet>232</a>            }<span class="question-mark">?</span>;
 <a href=#233 id=233 data-nosnippet>233</a>        }
 <a href=#234 id=234 data-nosnippet>234</a>
@@ -607,7 +607,7 @@
 <a href=#607 id=607 data-nosnippet>607</a>        </span>SOURCE_MAP.with(|sm| {
 <a href=#608 id=608 data-nosnippet>608</a>            <span class="kw">let </span>sm = sm.borrow();
 <a href=#609 id=609 data-nosnippet>609</a>            <span class="comment">// If `other` is not within the same FileInfo as us, return None.
-<a href=#610 id=610 data-nosnippet>610</a>            </span><span class="kw">if </span>!sm.fileinfo(<span class="kw-2">*</span><span class="self">self</span>).span_within(other) {
+<a href=#610 id=610 data-nosnippet>610</a>            </span><span class="macro">if !</span>sm.fileinfo(<span class="kw-2">*</span><span class="self">self</span>).span_within(other) {
 <a href=#611 id=611 data-nosnippet>611</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#612 id=612 data-nosnippet>612</a>            }
 <a href=#613 id=613 data-nosnippet>613</a>            <span class="prelude-val">Some</span>(Span {
@@ -836,18 +836,18 @@
 <a href=#836 id=836 data-nosnippet>836</a>    <span class="kw">fn </span>ident_ok(string: <span class="kw-2">&amp;</span>str) -&gt; bool {
 <a href=#837 id=837 data-nosnippet>837</a>        <span class="kw">let </span><span class="kw-2">mut </span>chars = string.chars();
 <a href=#838 id=838 data-nosnippet>838</a>        <span class="kw">let </span>first = chars.next().unwrap();
-<a href=#839 id=839 data-nosnippet>839</a>        <span class="kw">if </span>!is_ident_start(first) {
+<a href=#839 id=839 data-nosnippet>839</a>        <span class="macro">if !</span>is_ident_start(first) {
 <a href=#840 id=840 data-nosnippet>840</a>            <span class="kw">return </span><span class="bool-val">false</span>;
 <a href=#841 id=841 data-nosnippet>841</a>        }
 <a href=#842 id=842 data-nosnippet>842</a>        <span class="kw">for </span>ch <span class="kw">in </span>chars {
-<a href=#843 id=843 data-nosnippet>843</a>            <span class="kw">if </span>!is_ident_continue(ch) {
+<a href=#843 id=843 data-nosnippet>843</a>            <span class="macro">if !</span>is_ident_continue(ch) {
 <a href=#844 id=844 data-nosnippet>844</a>                <span class="kw">return </span><span class="bool-val">false</span>;
 <a href=#845 id=845 data-nosnippet>845</a>            }
 <a href=#846 id=846 data-nosnippet>846</a>        }
 <a href=#847 id=847 data-nosnippet>847</a>        <span class="bool-val">true
 <a href=#848 id=848 data-nosnippet>848</a>    </span>}
 <a href=#849 id=849 data-nosnippet>849</a>
-<a href=#850 id=850 data-nosnippet>850</a>    <span class="kw">if </span>!ident_ok(string) {
+<a href=#850 id=850 data-nosnippet>850</a>    <span class="macro">if !</span>ident_ok(string) {
 <a href=#851 id=851 data-nosnippet>851</a>        <span class="macro">panic!</span>(<span class="string">"{:?} is not a valid Ident"</span>, string);
 <a href=#852 id=852 data-nosnippet>852</a>    }
 <a href=#853 id=853 data-nosnippet>853</a>}
@@ -889,7 +889,7 @@
 <a href=#889 id=889 data-nosnippet>889</a>        <span class="kw">if </span><span class="self">self</span>.raw {
 <a href=#890 id=890 data-nosnippet>890</a>            f.write_str(<span class="string">"r#"</span>)<span class="question-mark">?</span>;
 <a href=#891 id=891 data-nosnippet>891</a>        }
-<a href=#892 id=892 data-nosnippet>892</a>        Display::fmt(<span class="kw-2">&amp;</span><span class="self">self</span>.sym, f)
+<a href=#892 id=892 data-nosnippet>892</a>        f.write_str(<span class="kw-2">&amp;</span><span class="self">self</span>.sym)
 <a href=#893 id=893 data-nosnippet>893</a>    }
 <a href=#894 id=894 data-nosnippet>894</a>}
 <a href=#895 id=895 data-nosnippet>895</a>
@@ -954,7 +954,7 @@
 <a href=#954 id=954 data-nosnippet>954</a>        <span class="kw">let </span>negative = cursor.starts_with_char(<span class="string">'-'</span>);
 <a href=#955 id=955 data-nosnippet>955</a>        <span class="kw">if </span>negative {
 <a href=#956 id=956 data-nosnippet>956</a>            cursor = cursor.advance(<span class="number">1</span>);
-<a href=#957 id=957 data-nosnippet>957</a>            <span class="kw">if </span>!cursor.starts_with_fn(|ch| ch.is_ascii_digit()) {
+<a href=#957 id=957 data-nosnippet>957</a>            <span class="macro">if !</span>cursor.starts_with_fn(|ch| ch.is_ascii_digit()) {
 <a href=#958 id=958 data-nosnippet>958</a>                <span class="kw">return </span><span class="prelude-val">Err</span>(LexError::call_site());
 <a href=#959 id=959 data-nosnippet>959</a>            }
 <a href=#960 id=960 data-nosnippet>960</a>        }
@@ -1015,7 +1015,7 @@
 <a href=#1015 id=1015 data-nosnippet>1015</a>
 <a href=#1016 id=1016 data-nosnippet>1016</a>    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>f32_unsuffixed(f: f32) -&gt; Literal {
 <a href=#1017 id=1017 data-nosnippet>1017</a>        <span class="kw">let </span><span class="kw-2">mut </span>s = f.to_string();
-<a href=#1018 id=1018 data-nosnippet>1018</a>        <span class="kw">if </span>!s.contains(<span class="string">'.'</span>) {
+<a href=#1018 id=1018 data-nosnippet>1018</a>        <span class="macro">if !</span>s.contains(<span class="string">'.'</span>) {
 <a href=#1019 id=1019 data-nosnippet>1019</a>            s.push_str(<span class="string">".0"</span>);
 <a href=#1020 id=1020 data-nosnippet>1020</a>        }
 <a href=#1021 id=1021 data-nosnippet>1021</a>        Literal::_new(s)
@@ -1023,7 +1023,7 @@
 <a href=#1023 id=1023 data-nosnippet>1023</a>
 <a href=#1024 id=1024 data-nosnippet>1024</a>    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>f64_unsuffixed(f: f64) -&gt; Literal {
 <a href=#1025 id=1025 data-nosnippet>1025</a>        <span class="kw">let </span><span class="kw-2">mut </span>s = f.to_string();
-<a href=#1026 id=1026 data-nosnippet>1026</a>        <span class="kw">if </span>!s.contains(<span class="string">'.'</span>) {
+<a href=#1026 id=1026 data-nosnippet>1026</a>        <span class="macro">if !</span>s.contains(<span class="string">'.'</span>) {
 <a href=#1027 id=1027 data-nosnippet>1027</a>            s.push_str(<span class="string">".0"</span>);
 <a href=#1028 id=1028 data-nosnippet>1028</a>        }
 <a href=#1029 id=1029 data-nosnippet>1029</a>        Literal::_new(s)
@@ -1098,7 +1098,7 @@
 <a href=#1098 id=1098 data-nosnippet>1098</a>    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>c_string(string: <span class="kw-2">&amp;</span>CStr) -&gt; Literal {
 <a href=#1099 id=1099 data-nosnippet>1099</a>        <span class="kw">let </span><span class="kw-2">mut </span>repr = <span class="string">"c\""</span>.to_string();
 <a href=#1100 id=1100 data-nosnippet>1100</a>        <span class="kw">let </span><span class="kw-2">mut </span>bytes = string.to_bytes();
-<a href=#1101 id=1101 data-nosnippet>1101</a>        <span class="kw">while </span>!bytes.is_empty() {
+<a href=#1101 id=1101 data-nosnippet>1101</a>        <span class="macro">while !</span>bytes.is_empty() {
 <a href=#1102 id=1102 data-nosnippet>1102</a>            <span class="kw">let </span>(valid, invalid) = <span class="kw">match </span>str::from_utf8(bytes) {
 <a href=#1103 id=1103 data-nosnippet>1103</a>                <span class="prelude-val">Ok</span>(all_valid) =&gt; {
 <a href=#1104 id=1104 data-nosnippet>1104</a>                    bytes = <span class="string">b""</span>;
@@ -1222,7 +1222,7 @@
 <a href=#1222 id=1222 data-nosnippet>1222</a>        <span class="comment">// Validate using fallback parser, because rustc is incapable of
 <a href=#1223 id=1223 data-nosnippet>1223</a>        // returning a recoverable Err for certain invalid token streams, and
 <a href=#1224 id=1224 data-nosnippet>1224</a>        // will instead permanently poison the compilation.
-<a href=#1225 id=1225 data-nosnippet>1225</a>        </span><span class="kw">if </span>!<span class="self">Self</span>::valid(src) {
+<a href=#1225 id=1225 data-nosnippet>1225</a>        </span><span class="macro">if !</span><span class="self">Self</span>::valid(src) {
 <a href=#1226 id=1226 data-nosnippet>1226</a>            <span class="kw">return </span><span class="prelude-val">Err</span>(imp::LexError::CompilerPanic);
 <a href=#1227 id=1227 data-nosnippet>1227</a>        }
 <a href=#1228 id=1228 data-nosnippet>1228</a>
@@ -1253,4 +1253,5 @@
 <a href=#1253 id=1253 data-nosnippet>1253</a>    </span><span class="kw">fn </span>valid(src: <span class="kw-2">&amp;</span>str) -&gt; bool {
 <a href=#1254 id=1254 data-nosnippet>1254</a>        Literal::from_str_checked(src).is_ok()
 <a href=#1255 id=1255 data-nosnippet>1255</a>    }
-<a href=#1256 id=1256 data-nosnippet>1256</a>}</code></pre></div></section></main></body></html>
+<a href=#1256 id=1256 data-nosnippet>1256</a>}
+</code></pre></div></section></main></body></html>
