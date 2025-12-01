@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/proc-macro2-1.0.103/src/parse.rs`."><title>parse.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-ca0dd0c4.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="proc_macro2" data-themes="" data-resource-suffix="" data-rustdoc-version="1.93.0-nightly (d5419f1e9 2025-10-30)" data-channel="nightly" data-search-js="search-6acd48a0.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ce535bd0.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">proc_macro2/</div>parse.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span><span class="kw">crate</span>::fallback::{
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/proc-macro2-1.0.103/src/parse.rs`."><title>parse.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-ca0dd0c4.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="proc_macro2" data-themes="" data-resource-suffix="" data-rustdoc-version="1.93.0-nightly (3ff30e7ea 2025-11-29)" data-channel="nightly" data-search-js="search-b9c1cd9b.js" data-stringdex-js="stringdex-a3946164.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-a410ff4d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">proc_macro2/</div>parse.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span><span class="kw">crate</span>::fallback::{
 <a href=#2 id=2 data-nosnippet>2</a>    <span class="self">self</span>, is_ident_continue, is_ident_start, Group, Ident, LexError, Literal, Span, TokenStream,
 <a href=#3 id=3 data-nosnippet>3</a>    TokenStreamBuilder,
 <a href=#4 id=4 data-nosnippet>4</a>};
@@ -77,7 +77,7 @@
 <a href=#77 id=77 data-nosnippet>77</a><span class="kw">fn </span>skip_whitespace(input: Cursor) -&gt; Cursor {
 <a href=#78 id=78 data-nosnippet>78</a>    <span class="kw">let </span><span class="kw-2">mut </span>s = input;
 <a href=#79 id=79 data-nosnippet>79</a>
-<a href=#80 id=80 data-nosnippet>80</a>    <span class="macro">while !</span>s.is_empty() {
+<a href=#80 id=80 data-nosnippet>80</a>    <span class="kw">while </span>!s.is_empty() {
 <a href=#81 id=81 data-nosnippet>81</a>        <span class="kw">let </span>byte = s.as_bytes()[<span class="number">0</span>];
 <a href=#82 id=82 data-nosnippet>82</a>        <span class="kw">if </span>byte == <span class="string">b'/' </span>{
 <a href=#83 id=83 data-nosnippet>83</a>            <span class="kw">if </span>s.starts_with(<span class="string">"//"</span>)
@@ -123,7 +123,7 @@
 <a href=#123 id=123 data-nosnippet>123</a>}
 <a href=#124 id=124 data-nosnippet>124</a>
 <a href=#125 id=125 data-nosnippet>125</a><span class="kw">fn </span>block_comment(input: Cursor) -&gt; PResult&lt;<span class="kw-2">&amp;</span>str&gt; {
-<a href=#126 id=126 data-nosnippet>126</a>    <span class="macro">if !</span>input.starts_with(<span class="string">"/*"</span>) {
+<a href=#126 id=126 data-nosnippet>126</a>    <span class="kw">if </span>!input.starts_with(<span class="string">"/*"</span>) {
 <a href=#127 id=127 data-nosnippet>127</a>        <span class="kw">return </span><span class="prelude-val">Err</span>(Reject);
 <a href=#128 id=128 data-nosnippet>128</a>    }
 <a href=#129 id=129 data-nosnippet>129</a>
@@ -196,7 +196,7 @@
 <a href=#196 id=196 data-nosnippet>196</a>        };
 <a href=#197 id=197 data-nosnippet>197</a>
 <a href=#198 id=198 data-nosnippet>198</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(open_delimiter) = <span class="kw">match </span>first {
-<a href=#199 id=199 data-nosnippet>199</a>            <span class="string">b'(' </span><span class="macro">if !</span>input.starts_with(ERROR) =&gt; <span class="prelude-val">Some</span>(Delimiter::Parenthesis),
+<a href=#199 id=199 data-nosnippet>199</a>            <span class="string">b'(' </span><span class="kw">if </span>!input.starts_with(ERROR) =&gt; <span class="prelude-val">Some</span>(Delimiter::Parenthesis),
 <a href=#200 id=200 data-nosnippet>200</a>            <span class="string">b'[' </span>=&gt; <span class="prelude-val">Some</span>(Delimiter::Bracket),
 <a href=#201 id=201 data-nosnippet>201</a>            <span class="string">b'{' </span>=&gt; <span class="prelude-val">Some</span>(Delimiter::Brace),
 <a href=#202 id=202 data-nosnippet>202</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -299,7 +299,7 @@
 <a href=#299 id=299 data-nosnippet>299</a>
 <a href=#300 id=300 data-nosnippet>300</a>    <span class="kw">let </span>(rest, sym) = ident_not_raw(rest)<span class="question-mark">?</span>;
 <a href=#301 id=301 data-nosnippet>301</a>
-<a href=#302 id=302 data-nosnippet>302</a>    <span class="macro">if !</span>raw {
+<a href=#302 id=302 data-nosnippet>302</a>    <span class="kw">if </span>!raw {
 <a href=#303 id=303 data-nosnippet>303</a>        <span class="kw">let </span>ident =
 <a href=#304 id=304 data-nosnippet>304</a>            <span class="kw">crate</span>::Ident::_new_fallback(Ident::new_unchecked(sym, fallback::Span::call_site()));
 <a href=#305 id=305 data-nosnippet>305</a>        <span class="kw">return </span><span class="prelude-val">Ok</span>((rest, ident));
@@ -325,7 +325,7 @@
 <a href=#325 id=325 data-nosnippet>325</a>
 <a href=#326 id=326 data-nosnippet>326</a>    <span class="kw">let </span><span class="kw-2">mut </span>end = input.len();
 <a href=#327 id=327 data-nosnippet>327</a>    <span class="kw">for </span>(i, ch) <span class="kw">in </span>chars {
-<a href=#328 id=328 data-nosnippet>328</a>        <span class="macro">if !</span>is_ident_continue(ch) {
+<a href=#328 id=328 data-nosnippet>328</a>        <span class="kw">if </span>!is_ident_continue(ch) {
 <a href=#329 id=329 data-nosnippet>329</a>            end = i;
 <a href=#330 id=330 data-nosnippet>330</a>            <span class="kw">break</span>;
 <a href=#331 id=331 data-nosnippet>331</a>        }
@@ -502,7 +502,7 @@
 <a href=#502 id=502 data-nosnippet>502</a>                <span class="kw">_ </span>=&gt; <span class="kw">break</span>,
 <a href=#503 id=503 data-nosnippet>503</a>            },
 <a href=#504 id=504 data-nosnippet>504</a>            other =&gt; {
-<a href=#505 id=505 data-nosnippet>505</a>                <span class="macro">if !</span>other.is_ascii() {
+<a href=#505 id=505 data-nosnippet>505</a>                <span class="kw">if </span>!other.is_ascii() {
 <a href=#506 id=506 data-nosnippet>506</a>                    <span class="kw">break</span>;
 <a href=#507 id=507 data-nosnippet>507</a>                }
 <a href=#508 id=508 data-nosnippet>508</a>            }
@@ -589,11 +589,11 @@
 <a href=#589 id=589 data-nosnippet>589</a>        },
 <a href=#590 id=590 data-nosnippet>590</a>        b =&gt; b.is_some(),
 <a href=#591 id=591 data-nosnippet>591</a>    };
-<a href=#592 id=592 data-nosnippet>592</a>    <span class="macro">if !</span>ok {
+<a href=#592 id=592 data-nosnippet>592</a>    <span class="kw">if </span>!ok {
 <a href=#593 id=593 data-nosnippet>593</a>        <span class="kw">return </span><span class="prelude-val">Err</span>(Reject);
 <a href=#594 id=594 data-nosnippet>594</a>    }
 <a href=#595 id=595 data-nosnippet>595</a>    <span class="kw">let </span>(offset, <span class="kw">_</span>) = bytes.next().ok_or(Reject)<span class="question-mark">?</span>;
-<a href=#596 id=596 data-nosnippet>596</a>    <span class="macro">if !</span>input.chars().as_str().is_char_boundary(offset) {
+<a href=#596 id=596 data-nosnippet>596</a>    <span class="kw">if </span>!input.chars().as_str().is_char_boundary(offset) {
 <a href=#597 id=597 data-nosnippet>597</a>        <span class="kw">return </span><span class="prelude-val">Err</span>(Reject);
 <a href=#598 id=598 data-nosnippet>598</a>    }
 <a href=#599 id=599 data-nosnippet>599</a>    <span class="kw">let </span>input = input.advance(offset).parse(<span class="string">"'"</span>)<span class="question-mark">?</span>;
@@ -612,7 +612,7 @@
 <a href=#612 id=612 data-nosnippet>612</a>        },
 <a href=#613 id=613 data-nosnippet>613</a>        ch =&gt; ch.is_some(),
 <a href=#614 id=614 data-nosnippet>614</a>    };
-<a href=#615 id=615 data-nosnippet>615</a>    <span class="macro">if !</span>ok {
+<a href=#615 id=615 data-nosnippet>615</a>    <span class="kw">if </span>!ok {
 <a href=#616 id=616 data-nosnippet>616</a>        <span class="kw">return </span><span class="prelude-val">Err</span>(Reject);
 <a href=#617 id=617 data-nosnippet>617</a>    }
 <a href=#618 id=618 data-nosnippet>618</a>    <span class="kw">let </span>(idx, <span class="kw">_</span>) = chars.next().ok_or(Reject)<span class="question-mark">?</span>;
@@ -758,7 +758,7 @@
 <a href=#758 id=758 data-nosnippet>758</a>        }
 <a href=#759 id=759 data-nosnippet>759</a>    }
 <a href=#760 id=760 data-nosnippet>760</a>
-<a href=#761 id=761 data-nosnippet>761</a>    <span class="macro">if !</span>(has_dot || has_exp) {
+<a href=#761 id=761 data-nosnippet>761</a>    <span class="kw">if </span>!(has_dot || has_exp) {
 <a href=#762 id=762 data-nosnippet>762</a>        <span class="kw">return </span><span class="prelude-val">Err</span>(Reject);
 <a href=#763 id=763 data-nosnippet>763</a>    }
 <a href=#764 id=764 data-nosnippet>764</a>
@@ -795,7 +795,7 @@
 <a href=#795 id=795 data-nosnippet>795</a>                <span class="kw">_ </span>=&gt; <span class="kw">break</span>,
 <a href=#796 id=796 data-nosnippet>796</a>            }
 <a href=#797 id=797 data-nosnippet>797</a>        }
-<a href=#798 id=798 data-nosnippet>798</a>        <span class="macro">if !</span>has_exp_value {
+<a href=#798 id=798 data-nosnippet>798</a>        <span class="kw">if </span>!has_exp_value {
 <a href=#799 id=799 data-nosnippet>799</a>            <span class="kw">return </span>token_before_exp;
 <a href=#800 id=800 data-nosnippet>800</a>        }
 <a href=#801 id=801 data-nosnippet>801</a>    }
@@ -924,7 +924,7 @@
 <a href=#924 id=924 data-nosnippet>924</a>    <span class="kw">let </span><span class="kw-2">mut </span>scan_for_bare_cr = comment;
 <a href=#925 id=925 data-nosnippet>925</a>    <span class="kw">while let </span><span class="prelude-val">Some</span>(cr) = scan_for_bare_cr.find(<span class="string">'\r'</span>) {
 <a href=#926 id=926 data-nosnippet>926</a>        <span class="kw">let </span>rest = <span class="kw-2">&amp;</span>scan_for_bare_cr[cr + <span class="number">1</span>..];
-<a href=#927 id=927 data-nosnippet>927</a>        <span class="macro">if !</span>rest.starts_with(<span class="string">'\n'</span>) {
+<a href=#927 id=927 data-nosnippet>927</a>        <span class="kw">if </span>!rest.starts_with(<span class="string">'\n'</span>) {
 <a href=#928 id=928 data-nosnippet>928</a>            <span class="kw">return </span><span class="prelude-val">Err</span>(Reject);
 <a href=#929 id=929 data-nosnippet>929</a>        }
 <a href=#930 id=930 data-nosnippet>930</a>        scan_for_bare_cr = rest;
